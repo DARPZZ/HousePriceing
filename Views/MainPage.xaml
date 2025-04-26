@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:vm="clr-namespace:HousePriceing.ViewModels"
+			 x:Class="HousePriceing.Views.MainPage"
+			 x:DataType="vm:MainViewModel">
+    <StackLayout >
+        <Label
+            FontSize="Large" HorizontalOptions="Center"
+            Text="Velkommen">
+        </Label>
+        <Grid RowDefinitions="1*,1*" ColumnDefinitions="1*,1*" Padding="0,10,0,25">
+            <Entry Text="{Binding Vejnavn}" Placeholder="Vej navn" Grid.Row="0" Grid.Column="0" />
+            <Entry Text="{Binding Husnummer}" Placeholder="Hus nummer" Grid.Row="0" Grid.Column="1"/>
+            <Entry Text="{Binding Postnummer}" Placeholder="Postnummer" Grid.Row="1" Grid.Column="0"/>
+            <Entry Text="{Binding By}" Placeholder="By" Grid.Row="1" Grid.Column="1"/>
+        </Grid>
+
+        <Button 
+            Command="{Binding StartStopTripClickedCommand}" 
+            Padding="5,5,5,5"
+            HeightRequest="45"
+            WidthRequest="250"
+            Text="Hent min lokation"
+            HorizontalOptions="Center">
+
+        </Button>
+        <Grid RowDefinitions="1*,1*,1*,1*,1*" ColumnDefinitions="1*,1*" Padding="0,50,0,5">
+            <Label Text="Pris" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="0" Grid.Column="0"></Label>
+            <Entry HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Udbudspris}" Placeholder="Udbudspris"   Grid.Row="0" Grid.Column="0" Margin="0,5,0,10" />
+
+            <Label Text="Bolig type" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="0" Grid.Column="1"></Label>
+            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Type}" Placeholder="Type" Grid.Row="0" Grid.Column="1" Margin="0,5,0,10"/>
+
+            <Label Text="Antal Værelser" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="1" Grid.Column="0"></Label>
+            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Værelser}" Placeholder="Værelser" Grid.Row="1" Grid.Column="0" Margin="0,5,0,10"/>
+
+            <Label Text="Boligareal" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="1" Grid.Column="1"></Label>
+            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Boligareal}" Placeholder="Boligareal" Grid.Row="1" Grid.Column="1" Margin="0,5,0,10"/>
+
+            <Label Text="Grund" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="2" Grid.Column="0" ></Label>
+            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Grund}" Placeholder="Grund" Grid.Row="2" Grid.Column="0" Margin="0,5,0,10"/>
+
+            <Label Text="Byggeår" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="2" Grid.Column="1"></Label>
+            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Byggeår}" Placeholder="Byggeår" Grid.Row="2" Grid.Column="1" Margin="0,5,0,10"/>
+
+            <Label Text="Energimærke" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="3" Grid.Column="0"></Label>
+            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Energimærke}" Placeholder="Energimærke" Grid.Row="3" Grid.Column="0" Margin="0,5,0,10"/>
+
+            <Label Text="Grundskyld" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="3" Grid.Column="1"></Label>
+            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Grundskyld}" Placeholder="Grundskyld" Grid.Row="3" Grid.Column="1" Margin="0,5,0,10"/>
+
+            <Label Text="Liggetid" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="4" Grid.Column="0"></Label>
+            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Liggetid}" Placeholder="Liggetid" Grid.Row="4" Grid.Column="0" Margin="0,5,0,10"/>
+            
+            
+        </Grid>
+        <Button
+            WidthRequest="250"
+            HeightRequest="60"
+            Margin="0,0,0,0"
+            Text="Se information omkring bolig"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Command="{Binding SeBoligClickedCommand}">
+            
+        </Button>
+    </StackLayout>
+
+</ContentPage>
