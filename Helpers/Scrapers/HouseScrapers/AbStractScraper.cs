@@ -18,7 +18,7 @@ namespace HousePriceing.Helpers.Scrapers.HouseScrapers
             this.locationHelper = locationHelper;
         }
 
-    
+        
         protected string ConvertEnergimærke(HtmlDocument htmldoc)
         {
             var energimærkebilelde = htmldoc.DocumentNode.SelectSingleNode("//*[@id=\"ctrldiv\"]/div[4]/div[1]/div[4]/div[1]/div[1]/div/div[2]/div[3]/img");
@@ -39,12 +39,12 @@ namespace HousePriceing.Helpers.Scrapers.HouseScrapers
 
             return "";
         }
-        protected async Task<string> GetUrl()
+        protected async Task LoadHtml(HtmlDocument htmlDoc,string endpoint)
         {
-            var adress = $"{startAdresse}{locationHelper.postNummer}-{locationHelper.by}/{locationHelper.vejNavn}-{locationHelper.HusNummer}";
-
-            return adress;
+            var html = await httpClient.GetStringAsync(await GetUrl(endpoint));
+            htmlDoc.LoadHtml(html);
         }
+
         protected async Task<string> GetUrl(string vuderinger)
         {
 

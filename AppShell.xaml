@@ -9,6 +9,7 @@
 	<TabBar>
 		<ShellContent
 			ContentTemplate="{DataTemplate views:MainPage}" />
+        
 		<ShellContent
 			
 			ContentTemplate="{DataTemplate views:BlankPage}" />

@@ -1,6 +1,5 @@
 ﻿using HousePriceing.Helpers;
 using HousePriceing.Helpers.Scrapers;
-using HousePriceing.Helpers.Scrapers.HouseScrapers;
 
 namespace HousePriceing;
 
@@ -22,6 +21,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<MainPage>();
 		builder.Services.AddScoped<ScrapeHousesForSale>();
 		builder.Services.AddScoped<ScrapeHousesNotForSale>();
+		builder.Services.AddSingleton<Indbrudscraper>();
 
 		builder.Services.AddSingleton<BlankViewModel>();
 

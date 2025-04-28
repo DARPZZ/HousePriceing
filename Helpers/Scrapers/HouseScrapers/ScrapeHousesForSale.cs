@@ -23,9 +23,7 @@ namespace HousePriceing.Helpers.Scrapers
        
         public async Task<bool> CheckIfHouseIsOnSale()
         {
-            var html = await httpClient.GetStringAsync(await GetUrl());
-           
-            htmlDoc.LoadHtml(html);
+            await LoadHtml(htmlDoc, "");
             try
             {
                 var squre = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"ctrldiv\"]/div[4]/div[1]/div[4]/div[1]/div[1]/div/div[2]/div[3]/sup[2]");

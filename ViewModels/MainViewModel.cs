@@ -134,6 +134,8 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task OnSeBoligClicked()
     {
+        GridVisibleIfHouseIsOnSale = false;
+        GridVisibleIfHouseIsNotOnSale = false;
         await Task.Run(() => ClearFeilds());
         await Task.Run(() => GetSetVairabels("set"));
         bool isHouseOnSale = await scrapeHousesForSale.CheckIfHouseIsOnSale();

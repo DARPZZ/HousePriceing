@@ -22,13 +22,11 @@ namespace HousePriceing.Helpers.Scrapers
         private HtmlNode selectNodes(int trNumber)
         {
             var node = htmlDoc.DocumentNode.SelectSingleNode($"//*[@id=\"bbr\"]/div/div[2]/div/div[1]/table[1]/tbody/tr[{trNumber}]/td[2]/strong");
-           
             return node;
         }
         private async Task<string> GetPrice()
         {
-            var html = await httpClient.GetStringAsync(await GetUrl("vurdering"));
-            htmlDoc.LoadHtml(html);
+            await LoadHtml(htmlDoc, "vurdering");
             string node = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"AIVurderingnumber\"]").InnerText.Trim();
 
             return node;
@@ -37,10 +35,12 @@ namespace HousePriceing.Helpers.Scrapers
         public async Task<BasicHouseInformation> InformationAboutHouseNotOnSale()
         {
             var pris = await GetPrice();
-            var html = await httpClient.GetStringAsync(await GetUrl());
-            htmlDoc.LoadHtml(html);
-            var samletAreal = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"bbr\"]/div/div[2]/div/div[1]/table[3]/tbody/tr[1]/td[2]/strong").InnerText.Trim();
-            var vægtetAreal = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"bbr\"]/div/div[2]/div/div[1]/table[3]/tbody/tr[5]/td[2]/strong").InnerText.Trim();
+            await LoadHtml(htmlDoc,"");
+            var samletNode = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"bbr\"]/div/div[2]/div/div[1]/table[3]/tbody/tr[1]/td[2]/strong");
+            var samletAreal = samletNode != null ? samletNode.InnerText.Trim() : null;
+            var vægtetNode = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"bbr\"]/div/div[2]/div/div[1]/table[3]/tbody/tr[5]/td[2]/strong");
+            var vægtetAreal = vægtetNode != null ? vægtetNode.InnerText.Trim() : null;
+
             BasicHouseInformation basicHouse = new BasicHouseInformation(
                     pris,
                     selectNodes(3).InnerText.Trim(),
