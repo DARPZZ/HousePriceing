@@ -25,7 +25,7 @@
             HorizontalOptions="Center">
 
         </Button>
-        <Grid RowDefinitions="1*,1*,1*,1*,1*" ColumnDefinitions="1*,1*" Padding="0,50,0,5">
+        <Grid RowDefinitions="1*,1*,1*,1*,1*" ColumnDefinitions="1*,1*" Padding="0,50,0,5" IsVisible="{Binding GridVisibleIfHouseIsOnSale}">
             <Label Text="Pris" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="0" Grid.Column="0"></Label>
             <Entry HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Udbudspris}" Placeholder="Udbudspris"   Grid.Row="0" Grid.Column="0" Margin="0,5,0,10" />
 
@@ -55,10 +55,15 @@
             
             
         </Grid>
+        <Grid RowDefinitions="1*" ColumnDefinitions="1*" Padding="0,50,0,5" IsVisible="{Binding GridVisibleIfHouseIsNotOnSale}">
+
+            <Label Text="Estimat" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="1" Grid.Column="0"></Label>
+            <Entry HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Estimat}" Placeholder="Estimat"   Grid.Row="0" Grid.Column="0" Margin="0,5,0,10" />
+        </Grid>
         <Button
             WidthRequest="250"
             HeightRequest="60"
-            Margin="0,0,0,0"
+            Margin="0,25,0,0"
             Text="Se information omkring bolig"
             HorizontalOptions="Center"
             VerticalOptions="Center"

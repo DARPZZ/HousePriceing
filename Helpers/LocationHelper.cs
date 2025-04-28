@@ -39,31 +39,34 @@ namespace HousePriceing.Helpers
 
         public async Task  GetCurrentLocation()
         {
-            try
+            await Task.Run(async() =>
             {
-                _isCheckingLocation = true;
-
-                GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Best);
-
-                _cancelTokenSource = new CancellationTokenSource();
-
-                Location location = await Geolocation.Default.GetLocationAsync(request);
-
-                if (location != null)
+                try
                 {
-                    longi = location.Longitude;
-                    lati = location.Latitude;
+                    _isCheckingLocation = true;
+
+                    GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Best,TimeSpan.Zero);
+
+                    _cancelTokenSource = new CancellationTokenSource();
+
+                    Location location = await Geolocation.Default.GetLocationAsync(request);
+
+                    if (location != null)
+                    {
+                        longi = location.Longitude;
+                        lati = location.Latitude;
+                    }
                 }
-            }
-        
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            finally
-            {
-                _isCheckingLocation = false;
-            }
+
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                finally
+                {
+                    _isCheckingLocation = false;
+                }
+            });
         }
         
 

@@ -1,11 +1,13 @@
 ﻿
 using HousePriceing.Helpers;
+using HousePriceing.Helpers.Scrapers;
 using HousePriceing.Models.HouseingModels;
 
 namespace HousePriceing.ViewModels;
 
 public partial class MainViewModel : BaseViewModel
 {
+    #region  ObservableProperty
     [ObservableProperty]
     private string vejnavn;
     [ObservableProperty]
@@ -16,7 +18,6 @@ public partial class MainViewModel : BaseViewModel
     private string postnummer;
     [ObservableProperty]
     private string pris;
-
 
     [ObservableProperty]
     private string udbudspris;
@@ -37,16 +38,27 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty]
     private string liggetid;
 
+    [ObservableProperty]
+    private string estimat;
+
+    [ObservableProperty]
+    private bool gridVisibleIfHouseIsOnSale;
+    [ObservableProperty]
+    private bool gridVisibleIfHouseIsNotOnSale;
+    #endregion
 
     private LocationHelper locationHelper;
-    private webscraper webscraper;
-    public MainViewModel(webscraper webscraper, LocationHelper locationHelper)
+    private ScrapeHousesForSale scrapeHousesForSale;
+    private ScrapeHousesNotForSale notForSale;
+    public MainViewModel(ScrapeHousesForSale scrapeHousesForSale, LocationHelper locationHelper, ScrapeHousesNotForSale scrapeHousesNotForSale)
     {
-        this.webscraper = webscraper;
+        this.scrapeHousesForSale = scrapeHousesForSale;
         this.locationHelper = locationHelper;
-
+        GridVisibleIfHouseIsOnSale = false;
+        GridVisibleIfHouseIsNotOnSale = false;
+        notForSale = scrapeHousesNotForSale;
     }
-    private async Task PlaceValues(BasicHouseInformation data)
+    private async Task PlaceValuesIfHouseIsOnSale(BasicHouseInformation data)
     {
         Udbudspris = data.Udbudspris  + " kr.";
         Type = data.Type;
@@ -57,6 +69,20 @@ public partial class MainViewModel : BaseViewModel
         Energimærke = data.Energimærke;
         Grundskyld = data.Grundskyld;
         Liggetid = data.Liggetid;
+        
+    }
+    private async void ClearFeilds()
+    {
+        Udbudspris = "";
+        Type = "";
+        Værelser = "";
+        Boligareal = "";
+        Grund = "";
+        Byggeår ="";
+        Energimærke ="";
+        Grundskyld = "";
+        Liggetid = "";
+        Estimat = "";
     }
     private async Task GetSetVairabels(string way)
     {
@@ -68,7 +94,7 @@ public partial class MainViewModel : BaseViewModel
                 By = locationHelper.by;
                 Postnummer = locationHelper.postNummer;
                 break;
-            case "Set":
+            case "set":
                 locationHelper.vejNavn = Vejnavn;
                 locationHelper.HusNummer = Husnummer;
                 locationHelper.by = By;
@@ -87,11 +113,24 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task OnSeBoligClicked()
     {
-        await GetSetVairabels("set");
-        if(await webscraper.ScrapeData())
+        await Task.Run(() => ClearFeilds());
+        await Task.Run(() => GetSetVairabels("set"));
+        bool isHouseOnSale = await scrapeHousesForSale.CheckIfHouseIsOnSale();
+        if (isHouseOnSale) 
         {
-            var data = webscraper.basicHouseInformation;
-            await PlaceValues(data);
+           var data = await scrapeHousesForSale.InformationAboutHouseWhenOnSale();
+           if (data != null)
+           {
+               GridVisibleIfHouseIsOnSale = true;
+               GridVisibleIfHouseIsNotOnSale = false;
+               await PlaceValuesIfHouseIsOnSale(data);
+           }
+        } else
+        {
+            await notForSale.InformationAboutHouseNotOnSale();
+            GridVisibleIfHouseIsOnSale = false;
+            GridVisibleIfHouseIsNotOnSale = true;
+            Estimat = notForSale.estimat;
         }
     }
 }
