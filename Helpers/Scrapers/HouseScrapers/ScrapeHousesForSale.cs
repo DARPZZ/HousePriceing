@@ -11,37 +11,29 @@ namespace HousePriceing.Helpers.Scrapers
 {
     public class ScrapeHousesForSale : AbStractScraper
     {
-
+        HtmlDocument htmlDoc = new HtmlDocument();
         public ScrapeHousesForSale(LocationHelper locationHelper) : base(locationHelper)
         {
-           
+            
         }
         private HtmlNode AddNotes(string text, HtmlDocument htmlDoc)
         {
             return htmlDoc.DocumentNode.SelectSingleNode($"//strong[text()='{text}:']/following-sibling::text()[1]");
         }
-
+       
         public async Task<bool> CheckIfHouseIsOnSale()
         {
+            var html = await httpClient.GetStringAsync(await GetUrl());
+           
+            htmlDoc.LoadHtml(html);
             try
             {
-                var httpClient = new HttpClient();
-                var html = await httpClient.GetStringAsync(await GetUrl());
-
-                HtmlDocument htmlDoc = new HtmlDocument();
-                htmlDoc.LoadHtml(html);
-
-                if (html != null)
+                var squre = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"ctrldiv\"]/div[4]/div[1]/div[4]/div[1]/div[1]/div/div[2]/div[3]/sup[2]");
+                if (squre == null)
                 {
-                    var squre = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"ctrldiv\"]/div[4]/div[1]/div[4]/div[1]/div[1]/div/div[2]/div[3]/sup[2]");
-                    if (squre == null)
-                    {
-                      return false;
-                    }
-                    return true;
+                    return false;
                 }
-                
-
+                return true;
             }
             catch (Exception ex)
             {
@@ -49,13 +41,9 @@ namespace HousePriceing.Helpers.Scrapers
             }
             return false;
         }
+
         public async Task<BasicHouseInformation> InformationAboutHouseWhenOnSale()
         {
-            var httpClient = new HttpClient();
-            var html = await httpClient.GetStringAsync(await GetUrl());
-
-            HtmlDocument htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(html);
             BasicHouseInformation basicHouse = new BasicHouseInformation
                 (
                     AddNotes("Udbudspris", htmlDoc).InnerText.Trim().Split("kr.")[0],

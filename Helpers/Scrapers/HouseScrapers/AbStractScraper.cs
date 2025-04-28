@@ -10,7 +10,7 @@ namespace HousePriceing.Helpers.Scrapers.HouseScrapers
     public abstract class AbStractScraper
     {
         private string startAdresse = "https://www.dingeo.dk/adresse/";
-
+        protected static HttpClient httpClient = new HttpClient();
         public string estimat { get; set; }
         LocationHelper locationHelper;
         protected AbStractScraper(LocationHelper locationHelper)

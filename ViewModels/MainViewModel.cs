@@ -40,6 +40,25 @@ public partial class MainViewModel : BaseViewModel
 
     [ObservableProperty]
     private string estimat;
+    [ObservableProperty]
+    private string opførselsesår;
+    [ObservableProperty]
+    private string boligtype;
+    [ObservableProperty]
+    private string ombygningsår;
+
+    [ObservableProperty]
+    private string samletAreal;
+    [ObservableProperty]
+    private string vægtetAreal;
+    [ObservableProperty]
+    private string antalEtager;
+    [ObservableProperty]
+    private string antaltoiletter;
+    [ObservableProperty]
+    private string antalbadeværelser;
+    [ObservableProperty]
+    private string antalværelser;
 
     [ObservableProperty]
     private bool gridVisibleIfHouseIsOnSale;
@@ -71,19 +90,21 @@ public partial class MainViewModel : BaseViewModel
         Liggetid = data.Liggetid;
         
     }
-    private async void ClearFeilds()
+    private async Task PlaceValuesIfHouseIsNotOnSale(BasicHouseInformation data)
     {
-        Udbudspris = "";
-        Type = "";
-        Værelser = "";
-        Boligareal = "";
-        Grund = "";
-        Byggeår ="";
-        Energimærke ="";
-        Grundskyld = "";
-        Liggetid = "";
-        Estimat = "";
+        Estimat = data.Estimat;
+        Opførselsesår = data.Opførselsesår;
+        Boligtype = data.Boligtype;
+        Ombygningsår = data.Ombygningsår;
+        AntalEtager = data.AntalEtager;
+        Antaltoiletter = data.Antaltoiletter;
+        Antalbadeværelser = data.Antalbadeværelser;
+        Antalværelser = data.Antalværelser;
+        SamletAreal = data.SamletAreal;
+        VægtetAreal = data.VægtetAreal;
+
     }
+
     private async Task GetSetVairabels(string way)
     {
         switch(way)
@@ -127,10 +148,37 @@ public partial class MainViewModel : BaseViewModel
            }
         } else
         {
-            await notForSale.InformationAboutHouseNotOnSale();
             GridVisibleIfHouseIsOnSale = false;
             GridVisibleIfHouseIsNotOnSale = true;
-            Estimat = notForSale.estimat;
+            var data = await notForSale.InformationAboutHouseNotOnSale();
+            if(data != null)
+            {
+                await PlaceValuesIfHouseIsNotOnSale(data);
+            }
+            
         }
+
+    }
+    private async void ClearFeilds()
+    {
+        Udbudspris = "";
+        Type = "";
+        Værelser = "";
+        Boligareal = "";
+        Grund = "";
+        Byggeår = "";
+        Energimærke = "";
+        Grundskyld = "";
+        Liggetid = "";
+        Estimat = "";
+        Opførselsesår = "";
+        Boligtype = "";
+        Ombygningsår = "";
+        AntalEtager = "";
+        Antaltoiletter = "";
+        Antalbadeværelser = "";
+        Antalværelser = "";
+        SamletAreal = "";
+        VægtetAreal = "";
     }
 }

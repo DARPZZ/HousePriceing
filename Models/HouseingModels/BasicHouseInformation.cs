@@ -24,6 +24,32 @@ namespace HousePriceing.Models.HouseingModels
             Grundskyld = grundskyld;
             Liggetid = liggetid;
         }
+        public BasicHouseInformation( string estimat,string opførselsesår,string boligtype, string ombygningsår,string antalEtager,string antaltoiletter,string antalbadeværelser,string antalværelser, string samletAreal, string vægtetAreal)
+        {
+            SamletAreal = samletAreal;
+            Estimat = estimat;
+            Opførselsesår = opførselsesår;
+            Boligtype = boligtype;
+            Ombygningsår = ombygningsår;
+            AntalEtager = antalEtager;
+            Antaltoiletter = antaltoiletter;
+            Antalbadeværelser = antalbadeværelser;
+            Antalværelser = antalværelser;
+            VægtetAreal = vægtetAreal;
+        }
+
+        public string VægtetAreal { get; set; }
+        public string SamletAreal { get; set; }
+        public string Estimat { get; set; }
+        public string Opførselsesår { get; set; }
+        public string Boligtype { get; set; }
+        public string Ombygningsår { get; set; }
+        public string AntalEtager { get; set; }
+        public string Antaltoiletter { get; set; }
+        public string Antalbadeværelser { get; set; }
+        public string Antalværelser { get; set; }
+
+
 
         public string Udbudspris { get; set; }
         public string Type { get; set; }
@@ -37,6 +63,7 @@ namespace HousePriceing.Models.HouseingModels
        
 
     }
+
     
     
 }
