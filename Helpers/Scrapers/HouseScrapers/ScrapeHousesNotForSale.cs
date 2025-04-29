@@ -36,22 +36,17 @@ namespace HousePriceing.Helpers.Scrapers
         {
             var pris = await GetPrice();
             await LoadHtml(htmlDoc,"");
-            var samletNode = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"bbr\"]/div/div[2]/div/div[1]/table[3]/tbody/tr[1]/td[2]/strong");
+            var samletNode = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"bbr\"]/div/div[2]/div/div[1]/table[3]/tbody/tr[2]/td[2]/strong");
             var samletAreal = samletNode != null ? samletNode.InnerText.Trim() : null;
-            var vægtetNode = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"bbr\"]/div/div[2]/div/div[1]/table[3]/tbody/tr[5]/td[2]/strong");
-            var vægtetAreal = vægtetNode != null ? vægtetNode.InnerText.Trim() : null;
-
             BasicHouseInformation basicHouse = new BasicHouseInformation(
                     pris,
                     selectNodes(3).InnerText.Trim(),
                     selectNodes(2).InnerText.Trim(),
                     selectNodes(4).InnerText.Trim(),
-                    selectNodes(8).InnerText.Trim(),
                     selectNodes(9).InnerText.Trim(),
                     selectNodes(10).InnerText.Trim(),
                     selectNodes(11).InnerText.Trim(),
-                    samletAreal,
-                    vægtetAreal
+                    samletAreal
                  );
                 return basicHouse;
         }

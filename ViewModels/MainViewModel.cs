@@ -101,7 +101,6 @@ public partial class MainViewModel : BaseViewModel
         Antalbadeværelser = data.Antalbadeværelser;
         Antalværelser = data.Antalværelser;
         SamletAreal = data.SamletAreal;
-        VægtetAreal = data.VægtetAreal;
 
     }
 

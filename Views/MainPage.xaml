@@ -72,23 +72,18 @@
             <Label Text="Ombygnings år" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="1" Grid.Column="1"></Label>
             <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Ombygningsår}" Placeholder="Ombygningsår" Grid.Row="1" Grid.Column="1" Margin="0,5,0,10"/>
 
-            <Label Text="Antal Etager" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="2" Grid.Column="0" ></Label>
-            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding AntalEtager}" Placeholder="AntalEtager" Grid.Row="2" Grid.Column="0" Margin="0,5,0,10"/>
-
             <Label Text="Antal toiletter" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="2" Grid.Column="1"></Label>
             <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Antaltoiletter}" Placeholder="Antaltoiletter" Grid.Row="2" Grid.Column="1" Margin="0,5,0,10"/>
 
-            <Label Text="Antal badeværelser" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="3" Grid.Column="0"></Label>
-            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Antalbadeværelser}" Placeholder="Antalbadeværelser" Grid.Row="3" Grid.Column="0" Margin="0,5,0,10"/>
+            <Label Text="Antal badeværelser" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="2" Grid.Column="0"></Label>
+            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Antalbadeværelser}" Placeholder="Antalbadeværelser" Grid.Row="2" Grid.Column="0" Margin="0,5,0,10"/>
 
-            <Label Text="Antal værelser" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="3" Grid.Column="1"></Label>
-            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Antalværelser}" Placeholder="Antalværelser" Grid.Row="3" Grid.Column="1"  Margin="0,5,0,10"/>
+            <Label Text="Antal værelser" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0"></Label>
+            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Antalværelser}" Grid.ColumnSpan="2" Placeholder="Antalværelser" Grid.Row="3" Grid.Column="0"  Margin="0,5,0,10"/>
 
             <Label Text="Bolig type" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="4" Grid.ColumnSpan="2"></Label>
             <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Boligtype}" Placeholder="Boligtype" Grid.Row="4" Grid.ColumnSpan="2"  Margin="0,5,0,10"/>
 
-            <Label Text="Vægtet Areal" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"></Label>
-            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding VægtetAreal}" Placeholder="VægtetAreal" Grid.ColumnSpan="2" Grid.Row="5"  Margin="0,5,0,10"/>
         </Grid>
         <Button
         WidthRequest="250"
