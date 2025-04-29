@@ -64,6 +64,9 @@ public partial class MainViewModel : BaseViewModel
     private bool gridVisibleIfHouseIsOnSale;
     [ObservableProperty]
     private bool gridVisibleIfHouseIsNotOnSale;
+
+    [ObservableProperty]
+    private bool showHouseError;
     #endregion
 
     private LocationHelper locationHelper;
@@ -133,34 +136,46 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task OnSeBoligClicked()
     {
-        GridVisibleIfHouseIsOnSale = false;
-        GridVisibleIfHouseIsNotOnSale = false;
-        await Task.Run(() => ClearFeilds());
-        await Task.Run(() => GetSetVairabels("set"));
-        bool isHouseOnSale = await scrapeHousesForSale.CheckIfHouseIsOnSale();
-        if (isHouseOnSale) 
-        {
-           var data = await scrapeHousesForSale.InformationAboutHouseWhenOnSale();
-           if (data != null)
-           {
-               GridVisibleIfHouseIsOnSale = true;
-               GridVisibleIfHouseIsNotOnSale = false;
-               await PlaceValuesIfHouseIsOnSale(data);
-           }
-        } else
+        ShowHouseError = false;
+        try
         {
             GridVisibleIfHouseIsOnSale = false;
-            GridVisibleIfHouseIsNotOnSale = true;
-            var data = await notForSale.InformationAboutHouseNotOnSale();
-            if(data != null)
+            GridVisibleIfHouseIsNotOnSale = false;
+            ClearFeilds();
+            await Task.Run(() => GetSetVairabels("set"));
+            bool isHouseOnSale = await scrapeHousesForSale.CheckIfHouseIsOnSale();
+            if (isHouseOnSale)
             {
-                await PlaceValuesIfHouseIsNotOnSale(data);
+                var data = await scrapeHousesForSale.InformationAboutHouseWhenOnSale();
+                if (data != null)
+                {
+                    GridVisibleIfHouseIsOnSale = true;
+                    GridVisibleIfHouseIsNotOnSale = false;
+                    await PlaceValuesIfHouseIsOnSale(data);
+                }
             }
-            
+            else
+            {
+                GridVisibleIfHouseIsOnSale = false;
+                GridVisibleIfHouseIsNotOnSale = true;
+                var data = await notForSale.InformationAboutHouseNotOnSale();
+                if (data != null)
+                {
+                    await PlaceValuesIfHouseIsNotOnSale(data);
+                }
+
+            }
+        }
+        catch (Exception ex)
+        {
+            GridVisibleIfHouseIsOnSale = false;
+            GridVisibleIfHouseIsNotOnSale = false;
+            ShowHouseError = true;
         }
 
+
     }
-    private async void ClearFeilds()
+    private void ClearFeilds()
     {
         Udbudspris = "";
         Type = "";

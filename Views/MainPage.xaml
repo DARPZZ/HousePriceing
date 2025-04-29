@@ -85,6 +85,7 @@
             <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Boligtype}" Placeholder="Boligtype" Grid.Row="4" Grid.ColumnSpan="2"  Margin="0,5,0,10"/>
 
         </Grid>
+        
         <Button
         WidthRequest="250"
         HeightRequest="60"
@@ -94,6 +95,25 @@
         VerticalOptions="Center"
         Command="{Binding SeBoligClickedCommand}">
         </Button>
+        <Grid RowDefinitions="1*,1*" HorizontalOptions="Center"  VerticalOptions="Center" Margin="0,150,0,0" IsVisible="{Binding ShowHouseError}" >
+            <Label
+                Text="Vi kunne ikke finde information på denne bygning"
+                FontAttributes="Bold"
+                TextColor="Red"
+                HorizontalTextAlignment="Center"
+                FontSize="Title"
+                Grid.Row="0"
+                />
+            <Label
+                Margin="0,25,0,0"
+                FontAttributes="Bold"
+                TextColor="Red"
+                HorizontalTextAlignment="Center"
+                Text="Prøv med en anden bygning"
+                FontSize="Title"
+                Grid.Row="1"
+                />
+        </Grid>
     </StackLayout>
 
 </ContentPage>
