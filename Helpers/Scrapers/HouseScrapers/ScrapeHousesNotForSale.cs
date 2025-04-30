@@ -26,16 +26,25 @@ namespace HousePriceing.Helpers.Scrapers
         }
         private async Task<string> GetPrice()
         {
-            await LoadHtml(htmlDoc, "vurdering");
+            var sw = Stopwatch.StartNew();
+            htmlDoc = await LoadHtml("vurdering");
+            sw.Stop();
+            Debug.WriteLine($"GetPrice took1 {sw.ElapsedMilliseconds} ms");
+            var sw2 = Stopwatch.StartNew();
             string node = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"AIVurderingnumber\"]").InnerText.Trim();
+            sw2.Stop();
+            Debug.WriteLine($"GetPrice took2 {sw.ElapsedMilliseconds} ms");
 
             return node;
+
+            
         }
 
-        public async Task<BasicHouseInformation> InformationAboutHouseNotOnSale()
+        public async  Task<BasicHouseInformation> InformationAboutHouseNotOnSale()
         {
-            var pris = await GetPrice();
-            await LoadHtml(htmlDoc,"");
+            var pris = await Task.Run(()=> GetPrice());
+            var sw = Stopwatch.StartNew();
+            htmlDoc = await LoadHtml(" ",true);
             var samletNode = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"bbr\"]/div/div[2]/div/div[1]/table[3]/tbody/tr[2]/td[2]/strong");
             var samletAreal = samletNode != null ? samletNode.InnerText.Trim() : null;
             BasicHouseInformation basicHouse = new BasicHouseInformation(
@@ -48,7 +57,8 @@ namespace HousePriceing.Helpers.Scrapers
                     selectNodes(11).InnerText.Trim(),
                     samletAreal
                  );
-                return basicHouse;
+            Debug.WriteLine($"InformationAboutHouseNotOnSale took {sw.ElapsedMilliseconds} ms");
+            return basicHouse;
         }
     }
 }

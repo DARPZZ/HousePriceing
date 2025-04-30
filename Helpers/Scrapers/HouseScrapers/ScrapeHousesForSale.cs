@@ -18,12 +18,15 @@ namespace HousePriceing.Helpers.Scrapers
         }
         private HtmlNode AddNotes(string text, HtmlDocument htmlDoc)
         {
+            
             return htmlDoc.DocumentNode.SelectSingleNode($"//strong[text()='{text}:']/following-sibling::text()[1]");
         }
        
         public async Task<bool> CheckIfHouseIsOnSale()
         {
-            await LoadHtml(htmlDoc, "");
+
+            //await LoadHtml(htmlDoc," ");
+            htmlDoc = await LoadHtml(" ",true);
             try
             {
                 var squre = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"ctrldiv\"]/div[4]/div[1]/div[4]/div[1]/div[1]/div/div[2]/div[3]/sup[2]");

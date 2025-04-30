@@ -5,16 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
+
 namespace HousePriceing.Helpers.Scrapers.HouseScrapers
 {
     public abstract class AbStractScraper
     {
+        private static Dictionary<string, HtmlDocument> cach;
         private string startAdresse = "https://www.dingeo.dk/adresse/";
         protected static HttpClient httpClient = new HttpClient();
         public string estimat { get; set; }
         LocationHelper locationHelper;
         protected AbStractScraper(LocationHelper locationHelper)
         {
+            cach = new Dictionary<string, HtmlDocument>();
             this.locationHelper = locationHelper;
         }
 
@@ -39,10 +42,26 @@ namespace HousePriceing.Helpers.Scrapers.HouseScrapers
 
             return "";
         }
-        protected async Task LoadHtml(HtmlDocument htmlDoc,string endpoint)
+        protected async Task<HtmlDocument> LoadHtml(string endpoint, bool clear =false)
         {
-            var html = await httpClient.GetStringAsync(await GetUrl(endpoint));
-            htmlDoc.LoadHtml(html);
+           
+            if (cach.ContainsKey(endpoint))
+            {
+                HtmlDocument document = cach.GetValueOrDefault(endpoint);
+                if (clear){cach.Clear();}
+                return document;
+            }
+            else
+            {
+                var html = await httpClient.GetStringAsync(await GetUrl(endpoint));
+                var htmlDoc = new HtmlDocument();
+                htmlDoc.LoadHtml(html);
+                cach[endpoint] = htmlDoc;
+                return htmlDoc;
+            }
+
+          
+
         }
 
         protected async Task<string> GetUrl(string vuderinger)
