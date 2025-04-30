@@ -26,16 +26,18 @@ namespace HousePriceing.Helpers.Scrapers
         }
         private async Task<string> GetPrice()
         {
-            await LoadHtml(htmlDoc, "vurdering");
+            htmlDoc = await LoadHtml("vurdering");
             string node = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"AIVurderingnumber\"]").InnerText.Trim();
-
             return node;
         }
 
         public async Task<BasicHouseInformation> InformationAboutHouseNotOnSale()
         {
-            var pris = await GetPrice();
-            await LoadHtml(htmlDoc,"");
+            var loadHtmlTask =  LoadHtml(" ");
+            var prisTask =  GetPrice();
+            await Task.WhenAll(loadHtmlTask, prisTask);
+            var pris = prisTask.Result.Trim();
+            htmlDoc = loadHtmlTask.Result;
             var samletNode = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"bbr\"]/div/div[2]/div/div[1]/table[3]/tbody/tr[2]/td[2]/strong");
             var samletAreal = samletNode != null ? samletNode.InnerText.Trim() : null;
             BasicHouseInformation basicHouse = new BasicHouseInformation(

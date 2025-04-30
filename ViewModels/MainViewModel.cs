@@ -149,22 +149,22 @@ public partial class MainViewModel : BaseViewModel
                 var data = await scrapeHousesForSale.InformationAboutHouseWhenOnSale();
                 if (data != null)
                 {
+                    await PlaceValuesIfHouseIsOnSale(data);
                     GridVisibleIfHouseIsOnSale = true;
                     GridVisibleIfHouseIsNotOnSale = false;
-                    await PlaceValuesIfHouseIsOnSale(data);
                 }
             }
             else
             {
-                GridVisibleIfHouseIsOnSale = false;
-                GridVisibleIfHouseIsNotOnSale = true;
                 var data = await notForSale.InformationAboutHouseNotOnSale();
                 if (data != null)
                 {
                     await PlaceValuesIfHouseIsNotOnSale(data);
                 }
-
+                GridVisibleIfHouseIsOnSale = false;
+                GridVisibleIfHouseIsNotOnSale = true;
             }
+            notForSale.cache.Clear();
         }
         catch (Exception ex)
         {
