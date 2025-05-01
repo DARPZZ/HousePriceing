@@ -136,6 +136,7 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task OnSeBoligClicked()
     {
+        scrapeHousesForSale.cache.Clear();
         ShowHouseError = false;
         try
         {
@@ -164,7 +165,6 @@ public partial class MainViewModel : BaseViewModel
                 GridVisibleIfHouseIsOnSale = false;
                 GridVisibleIfHouseIsNotOnSale = true;
             }
-            notForSale.cache.Clear();
         }
         catch (Exception ex)
         {
@@ -172,9 +172,8 @@ public partial class MainViewModel : BaseViewModel
             GridVisibleIfHouseIsNotOnSale = false;
             ShowHouseError = true;
         }
-
-
     }
+
     private void ClearFeilds()
     {
         Udbudspris = "";

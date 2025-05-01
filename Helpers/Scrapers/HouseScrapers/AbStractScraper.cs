@@ -42,7 +42,7 @@ namespace HousePriceing.Helpers.Scrapers.HouseScrapers
 
             return "";
         }
-        protected async Task<HtmlDocument> LoadHtml(string endpoint, bool clear = false)
+        protected async Task<HtmlDocument> LoadHtml(string endpoint)
         {
 
             if (cache.ContainsKey(endpoint))

@@ -33,7 +33,7 @@ namespace HousePriceing.Helpers.Scrapers
 
         public async Task<BasicHouseInformation> InformationAboutHouseNotOnSale()
         {
-            var loadHtmlTask =  LoadHtml(" ");
+            var loadHtmlTask = LoadHtml(" ");
             var prisTask =  GetPrice();
             await Task.WhenAll(loadHtmlTask, prisTask);
             var pris = prisTask.Result.Trim();

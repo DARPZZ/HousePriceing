@@ -11,7 +11,7 @@ namespace HousePriceing.Helpers.Scrapers
 {
     public class ScrapeHousesForSale : AbStractScraper
     {
-        HtmlDocument htmlDoc = new HtmlDocument();
+        HtmlDocument _document;
         public ScrapeHousesForSale(LocationHelper locationHelper) : base(locationHelper)
         {
             
@@ -23,10 +23,11 @@ namespace HousePriceing.Helpers.Scrapers
        
         public async Task<bool> CheckIfHouseIsOnSale()
         {
-            await LoadHtml(" ");
+            _document = await LoadHtml(" ");
             try
             {
-                var squre = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"ctrldiv\"]/div[4]/div[1]/div[4]/div[1]/div[1]/div/div[2]/div[3]/sup[2]");
+                var squre = _document.DocumentNode.SelectSingleNode("//*[@id=\"ctrldiv\"]/div[4]/div[1]/div[4]/div[1]/h1/strong");
+
                 if (squre == null)
                 {
                     return false;
@@ -44,15 +45,15 @@ namespace HousePriceing.Helpers.Scrapers
         {
             BasicHouseInformation basicHouse = new BasicHouseInformation
                 (
-                    AddNotes("Udbudspris", htmlDoc).InnerText.Trim().Split("kr.")[0],
-                    AddNotes("Type", htmlDoc).InnerText.Trim(),
-                    AddNotes("Værelser", htmlDoc).InnerText.Trim(),
-                    AddNotes("Boligareal", htmlDoc).InnerText.Trim() +2,
-                    AddNotes("Grund", htmlDoc).InnerText.Trim() + 2,
-                    AddNotes("Byggeår", htmlDoc).InnerText.Trim(),
-                    ConvertEnergimærke(htmlDoc),
-                    AddNotes("Grundskyld", htmlDoc).InnerText.Trim().Split(" ")[0] + "%",
-                    AddNotes("Liggetid", htmlDoc).InnerText.Trim()
+                    AddNotes("Udbudspris", _document).InnerText.Trim().Split("kr.")[0],
+                    AddNotes("Type", _document).InnerText.Trim(),
+                    AddNotes("Værelser", _document).InnerText.Trim(),
+                    AddNotes("Boligareal", _document).InnerText.Trim() +2,
+                    AddNotes("Grund", _document).InnerText.Trim() + 2,
+                    AddNotes("Byggeår", _document).InnerText.Trim(),
+                    ConvertEnergimærke(_document),
+                    AddNotes("Grundskyld", _document).InnerText.Trim().Split(" ")[0] + "%",
+                    AddNotes("Liggetid", _document).InnerText.Trim()
                 );
             return basicHouse;
         }
