@@ -7,7 +7,9 @@
     <ScrollView>
         <StackLayout >
             <Label VerticalOptions="CenterAndExpand" Text="{Binding OpvarmningText}"    FontSize="Large" ></Label>
+            <Image Source="{Binding PictureSource}" Aspect="AspectFit"  Margin="25,25,25,25"  />
             
+
         </StackLayout>
     </ScrollView>
 </ContentPage>
