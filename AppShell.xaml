@@ -16,13 +16,13 @@
                Route="MainPage"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem FlyoutIcon="hest.jpg"  Title="Hjem">
+    <FlyoutItem FlyoutIcon="hest.jpg"  Title="Bolig Opvarmning">
      <Tab>
         <ShellContent
            
-            Title="Hjem"
-            ContentTemplate="{DataTemplate views:MainPage}" 
-            Route="MainPage"/>
+            Title="Bolig Opvarmning"
+            ContentTemplate="{DataTemplate views:BoligOpvarmningPage}" 
+            Route="BoligOpvarmningPage"/>
      </Tab>
  </FlyoutItem>
 

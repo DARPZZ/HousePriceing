@@ -24,9 +24,10 @@ public static class MauiProgram
 		builder.Services.AddSingleton<Indbrudscraper>();
 		builder.Services.AddSingleton<ConnectivityTest>();
 
-		builder.Services.AddSingleton<BlankViewModel>();
+		builder.Services.AddSingleton<BoligOpvarmningPage>();
 
-		builder.Services.AddSingleton<BlankPage>();
+		builder.Services.AddSingleton<BoligOpvarmningViewModel>();
+		builder.Services.AddSingleton<BoligOpvarmningScraper>();
 
 		return builder.Build();
 	}
