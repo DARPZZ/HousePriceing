@@ -32,6 +32,10 @@ public static class MauiProgram
 		builder.Services.AddSingleton<TrafikStøjPage>();
 		builder.Services.AddSingleton<TrafikStøjScraper>();
 
+		builder.Services.AddSingleton<InbrudPage>();
+		builder.Services.AddSingleton<IndbrudViewModel>();
+		builder.Services.AddSingleton<Indbrudscraper>();
+
 		return builder.Build();
 	}
 }

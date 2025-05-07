@@ -35,5 +35,15 @@
            Route="TrafikStøjPage"/>
         </Tab>
     </FlyoutItem>
+    <FlyoutItem FlyoutIcon="hest.jpg"  Title="Indbrud risiko">
+        <Tab>
+            <ShellContent
+        
+                 Title="Indbrud risiko"
+                 ContentTemplate="{DataTemplate views:InbrudPage}" 
+                 Route="InbrudPage"
+            />
+        </Tab>
+    </FlyoutItem>
 
 </Shell>
