@@ -4,6 +4,7 @@
 			 xmlns:vm="clr-namespace:HousePriceing.ViewModels"
 			 x:Class="HousePriceing.Views.MainPage"
 			 x:DataType="vm:MainViewModel">
+    <ScrollView>
     <StackLayout >
         <Label
             FontSize="Large" HorizontalOptions="Center"
@@ -22,7 +23,8 @@
             HeightRequest="45"
             WidthRequest="250"
             Text="Hent min lokation"
-            HorizontalOptions="Center">
+            HorizontalOptions="Center"
+            IsEnabled="{Binding ShowHouseEnable}" >
 
         </Button>
         <Grid RowDefinitions="1*,1*,1*,1*,1*" ColumnDefinitions="1*,1*" Padding="0,50,0,5" IsVisible="{Binding GridVisibleIfHouseIsOnSale}">
@@ -85,6 +87,7 @@
             <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Boligtype}" Placeholder="Boligtype" Grid.Row="4" Grid.ColumnSpan="2"  Margin="0,5,0,10"/>
 
         </Grid>
+
         
         <Button
         WidthRequest="250"
@@ -93,7 +96,8 @@
         Text="Se information omkring bolig"
         HorizontalOptions="Center"
         VerticalOptions="Center"
-        Command="{Binding SeBoligClickedCommand}">
+        Command="{Binding SeBoligClickedCommand}"
+        IsEnabled="{Binding ShowHouseEnable}">
         </Button>
         <Grid RowDefinitions="1*,1*" HorizontalOptions="Center"  VerticalOptions="Center" Margin="0,150,0,0" IsVisible="{Binding ShowHouseError}" >
             <Label
@@ -114,6 +118,12 @@
                 Grid.Row="1"
                 />
         </Grid>
+
+        <StackLayout IsVisible="{Binding NetWorkState}">
+            <Label FontSize="Large" FontAttributes="Bold" LineBreakMode="NoWrap" Padding="0,200,0,0" Text="Du har ikke adgang til intternettet"></Label>
+            <Label FontSize="Large" FontAttributes="Bold" LineBreakMode="NoWrap" Padding="0,5,0,0"  Text="Gå til indstillinger og slå netværk til"></Label>
+        </StackLayout>
     </StackLayout>
+    </ScrollView>
 
 </ContentPage>

@@ -20,6 +20,9 @@ public partial class MainViewModel : BaseViewModel
     private string pris;
 
     [ObservableProperty]
+    private bool netWorkState;
+
+    [ObservableProperty]
     private string udbudspris;
     [ObservableProperty]
     private string type;
@@ -67,19 +70,42 @@ public partial class MainViewModel : BaseViewModel
 
     [ObservableProperty]
     private bool showHouseError;
+    [ObservableProperty]
+    private bool showHouseEnable;
     #endregion
 
     private LocationHelper locationHelper;
     private ScrapeHousesForSale scrapeHousesForSale;
     private ScrapeHousesNotForSale notForSale;
-    public MainViewModel(ScrapeHousesForSale scrapeHousesForSale, LocationHelper locationHelper, ScrapeHousesNotForSale scrapeHousesNotForSale)
+    private ConnectivityTest connectionHelper;
+    public MainViewModel(ScrapeHousesForSale scrapeHousesForSale, LocationHelper locationHelper, ScrapeHousesNotForSale scrapeHousesNotForSale, ConnectivityTest connectionHelper)
     {
         this.scrapeHousesForSale = scrapeHousesForSale;
         this.locationHelper = locationHelper;
         GridVisibleIfHouseIsOnSale = false;
         GridVisibleIfHouseIsNotOnSale = false;
         notForSale = scrapeHousesNotForSale;
+        this.connectionHelper = connectionHelper;
+        ShowNetworkState();
+        connectionHelper.NetworkStatusChanged += OnNetworkStatusChanged;
     }
+
+    private void OnNetworkStatusChanged(object? sender, bool e)
+    {
+        if (e)
+        {
+            NetWorkState = false;
+            ShowHouseEnable = true;
+        }
+        else
+        {
+            NetWorkState = true;
+            ShowHouseEnable = false;
+        }
+    
+    }
+
+
     private async Task PlaceValuesIfHouseIsOnSale(BasicHouseInformation data)
     {
         Udbudspris = data.Udbudspris  + " kr.";
@@ -93,6 +119,21 @@ public partial class MainViewModel : BaseViewModel
         Liggetid = data.Liggetid;
         
     }
+    private void ShowNetworkState()
+    {
+
+       var firstState = connectionHelper.GetfirstNetworkState();
+        if (firstState) 
+        {
+            ShowHouseEnable = true;
+            NetWorkState = false;
+        }
+        else
+        {
+            NetWorkState = true;
+        }
+
+    }
     private async Task PlaceValuesIfHouseIsNotOnSale(BasicHouseInformation data)
     {
         Estimat = data.Estimat;
@@ -104,7 +145,6 @@ public partial class MainViewModel : BaseViewModel
         Antalbadeværelser = data.Antalbadeværelser;
         Antalværelser = data.Antalværelser;
         SamletAreal = data.SamletAreal;
-
     }
 
     private async Task GetSetVairabels(string way)
@@ -137,6 +177,7 @@ public partial class MainViewModel : BaseViewModel
     private async Task OnSeBoligClicked()
     {
         scrapeHousesForSale.cache.Clear();
+        notForSale.cache.Clear();
         ShowHouseError = false;
         try
         {
@@ -196,4 +237,5 @@ public partial class MainViewModel : BaseViewModel
         SamletAreal = "";
         VægtetAreal = "";
     }
+  
 }

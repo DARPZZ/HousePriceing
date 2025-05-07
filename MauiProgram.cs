@@ -22,6 +22,7 @@ public static class MauiProgram
 		builder.Services.AddScoped<ScrapeHousesForSale>();
 		builder.Services.AddScoped<ScrapeHousesNotForSale>();
 		builder.Services.AddSingleton<Indbrudscraper>();
+		builder.Services.AddSingleton<ConnectivityTest>();
 
 		builder.Services.AddSingleton<BlankViewModel>();
 
