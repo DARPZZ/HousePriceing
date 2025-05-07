@@ -2,6 +2,7 @@
 using HousePriceing.Helpers;
 using HousePriceing.Helpers.Scrapers;
 using HousePriceing.Models.HouseingModels;
+using HtmlAgilityPack;
 
 namespace HousePriceing.ViewModels;
 
@@ -176,11 +177,13 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task OnSeBoligClicked()
     {
-        scrapeHousesForSale.cache.Clear();
-        notForSale.cache.Clear();
+       
+        
         ShowHouseError = false;
         try
         {
+           
+
             GridVisibleIfHouseIsOnSale = false;
             GridVisibleIfHouseIsNotOnSale = false;
             ClearFeilds();
@@ -212,7 +215,9 @@ public partial class MainViewModel : BaseViewModel
             GridVisibleIfHouseIsOnSale = false;
             GridVisibleIfHouseIsNotOnSale = false;
             ShowHouseError = true;
+            scrapeHousesForSale.ClearCache();
         }
+        scrapeHousesForSale.ClearCache();
     }
 
     private void ClearFeilds()

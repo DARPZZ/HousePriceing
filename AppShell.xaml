@@ -26,4 +26,14 @@
      </Tab>
  </FlyoutItem>
 
+    <FlyoutItem FlyoutIcon="hest.jpg"  Title="TrafikStøj">
+        <Tab>
+            <ShellContent
+          
+           Title="TrafikStøj"
+           ContentTemplate="{DataTemplate views:TrafikStøjPage}" 
+           Route="TrafikStøjPage"/>
+        </Tab>
+    </FlyoutItem>
+
 </Shell>

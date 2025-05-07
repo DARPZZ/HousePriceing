@@ -28,6 +28,9 @@ public static class MauiProgram
 
 		builder.Services.AddSingleton<BoligOpvarmningViewModel>();
 		builder.Services.AddSingleton<BoligOpvarmningScraper>();
+		builder.Services.AddSingleton<TrafikStøjViewModel>();
+		builder.Services.AddSingleton<TrafikStøjPage>();
+		builder.Services.AddSingleton<TrafikStøjScraper>();
 
 		return builder.Build();
 	}

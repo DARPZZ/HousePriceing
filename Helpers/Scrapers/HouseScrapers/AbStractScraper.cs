@@ -9,8 +9,9 @@ namespace HousePriceing.Helpers.Scrapers.HouseScrapers
 {
     public abstract class AbStractScraper
     {
-        public Dictionary<string,HtmlDocument> cache { get; set; }
-        
+        protected static Dictionary<string, HtmlDocument> cache = new Dictionary<string, HtmlDocument>();
+
+
         private string startAdresse = "https://www.dingeo.dk/adresse/";
         protected static HttpClient httpClient = new HttpClient();
         public string estimat { get; set; }
@@ -20,7 +21,10 @@ namespace HousePriceing.Helpers.Scrapers.HouseScrapers
             cache = new Dictionary<string, HtmlDocument>();
             this.locationHelper = locationHelper;
         }
-
+        public void ClearCache()
+        {
+            cache.Clear();
+        }
         
         protected string ConvertEnergimærke(HtmlDocument htmldoc)
         {

@@ -70,6 +70,12 @@
 		<BundleResource Include="Platforms\iOS\PrivacyInfo.xcprivacy" LogicalName="PrivacyInfo.xcprivacy" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Views\TrafikStøjPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 	<PropertyGroup Label="MauiAppAccelerator">
 		<wizardVersion>v1.5</wizardVersion>
 		<projectType>MVVMToolkit</projectType>

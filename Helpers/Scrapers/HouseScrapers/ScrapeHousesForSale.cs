@@ -16,6 +16,10 @@ namespace HousePriceing.Helpers.Scrapers
         {
             
         }
+        public void ClearCache()
+        {
+            cache.Clear();
+        }
         private HtmlNode AddNotes(string text, HtmlDocument htmlDoc)
         {
             return htmlDoc.DocumentNode.SelectSingleNode($"//strong[text()='{text}:']/following-sibling::text()[1]");
