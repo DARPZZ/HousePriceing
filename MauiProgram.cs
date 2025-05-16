@@ -36,6 +36,10 @@ public static class MauiProgram
 		builder.Services.AddSingleton<IndbrudViewModel>();
 		builder.Services.AddSingleton<Indbrudscraper>();
 
-		return builder.Build();
+        builder.Services.AddSingleton<OversvømmelsePage>();
+        builder.Services.AddSingleton<OversvømmelseViewModel>();
+        builder.Services.AddSingleton<OversvømmelseScraper>();
+
+        return builder.Build();
 	}
 }

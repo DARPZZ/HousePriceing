@@ -7,7 +7,7 @@
 	xmlns:local="clr-namespace:HousePriceing"
     >
     
-    <FlyoutItem FlyoutIcon="hest.jpg"  Title="Hjem">
+    <FlyoutItem  Title="Hjem">
         <Tab>
            <ShellContent
               
@@ -16,7 +16,7 @@
                Route="MainPage"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem FlyoutIcon="hest.jpg"  Title="Bolig Opvarmning">
+    <FlyoutItem FlyoutIcon="heatingicon.png"  Title="Bolig Opvarmning">
      <Tab>
         <ShellContent
            
@@ -26,7 +26,7 @@
      </Tab>
  </FlyoutItem>
 
-    <FlyoutItem FlyoutIcon="hest.jpg"  Title="TrafikStøj">
+    <FlyoutItem FlyoutIcon="trafficicon.png"  Title="TrafikStøj">
         <Tab>
             <ShellContent
           
@@ -35,7 +35,7 @@
            Route="TrafikStøjPage"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem FlyoutIcon="hest.jpg"  Title="Indbrud risiko">
+    <FlyoutItem FlyoutIcon="thefticon.png"  Title="Indbrud risiko">
         <Tab>
             <ShellContent
         
@@ -45,5 +45,16 @@
             />
         </Tab>
     </FlyoutItem>
+    <FlyoutItem FlyoutIcon="flodicon.png"  Title="Oversvømmelse">
+        <Tab>
+            <ShellContent
+     
+              Title="Oversvømmelse"
+              ContentTemplate="{DataTemplate views:OversvømmelsePage}" 
+              Route="OversvømmelsePage"
+         />
+        </Tab>
+    </FlyoutItem>
+
 
 </Shell>

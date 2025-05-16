@@ -49,7 +49,7 @@ namespace HousePriceing.Helpers
 
                     _cancelTokenSource = new CancellationTokenSource();
 
-                    Location location = await Geolocation.Default.GetLocationAsync(request);
+                    Location ?location = await Geolocation.Default.GetLocationAsync(request);
 
                     if (location != null)
                     {
