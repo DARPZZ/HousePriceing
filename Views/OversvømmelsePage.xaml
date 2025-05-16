@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HousePriceing.Views.OversvømmelsePage"
              Title="OversvømmelsePage">
-    <StackLayout>
+    <StackLayout Padding="24" >
         <Image
             Source="{Binding OversvømmelsePicture}"
             HeightRequest="80"
