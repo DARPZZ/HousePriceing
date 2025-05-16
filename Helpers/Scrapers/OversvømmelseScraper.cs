@@ -11,16 +11,11 @@ namespace HousePriceing.Helpers.Scrapers
 {
     public class OversvømmelseScraper : AbStractScraper
     {
+        HtmlDocument _document;
         public OversvømmelseScraper(LocationHelper locationHelper) : base(locationHelper)
         {
            
         }
-        private HtmlNode Getoversvoemmelsesdirektiv(int paragraph)
-        {
-            var node = _document.DocumentNode.SelectSingleNode($"//*[@id=\"oversvoemmelsesdirektiv\"]/div/div[2]/div/div[1]/p[4]");
-            return node;
-        }
-        HtmlDocument _document;
       
         public async Task<OversvømmelseModel> GetInformationAboutOversvømmelse()
         {
@@ -28,9 +23,9 @@ namespace HousePriceing.Helpers.Scrapers
             var planTrin1 = _document.DocumentNode.SelectSingleNode("//*[@id=\"oversvoemmelsesdirektiv\"]/div/div[2]/div/div[1]");
             var planTrin1Text = planTrin1 != null ? planTrin1.InnerText : "";
             string platrin2 ="";
+
             foreach (var item in planTrin1.ChildNodes)
             {
-               
                 if(item.Name == "p")
                 {
                     
@@ -42,8 +37,7 @@ namespace HousePriceing.Helpers.Scrapers
             OversvømmelseModel oversvømmelsesModel = new OversvømmelseModel(
                     planTrin1Text,
                     platrin2
-                );
-
+            );
             return oversvømmelsesModel;
         }
     }

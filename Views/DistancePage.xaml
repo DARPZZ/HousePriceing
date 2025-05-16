@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HousePriceing.Views.DistancePage"
+             Title="DistancePage">
+    <ScrollView>
+        <StackLayout HorizontalOptions="CenterAndExpand">
+            <Label Text="Afstande til forskellige ting"
+                   HorizontalTextAlignment="Center"
+                   FontAttributes="Bold"
+                   FontSize="Large"
+                   Padding="0,0,0,0"
+                   />
+            <CollectionView ItemsSource="{Binding Distances}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="1"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="5" Padding="10" BorderColor="Gray">
+                            <StackLayout>
+                                <Label Text="{Binding Type}" FontSize="18" FontAttributes="Bold" />
+                                <Label Text="{Binding Navn}" FontSize="14" TextColor="Blue"  FontAttributes="Bold"/>
+                                <Label Text="{Binding Afstand}" FontSize="14" TextColor="DarkGreen" FontAttributes="Bold" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

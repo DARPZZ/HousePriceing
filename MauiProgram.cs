@@ -40,6 +40,10 @@ public static class MauiProgram
         builder.Services.AddSingleton<OversvømmelseViewModel>();
         builder.Services.AddSingleton<OversvømmelseScraper>();
 
+		builder.Services.AddSingleton<DistancePage>();
+		builder.Services.AddSingleton<DistanceViewModel>();
+		builder.Services.AddSingleton<DistanceScraper>();
+
         return builder.Build();
 	}
 }

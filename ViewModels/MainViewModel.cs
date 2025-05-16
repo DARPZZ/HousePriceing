@@ -106,7 +106,6 @@ public partial class MainViewModel : BaseViewModel
     
     }
 
-
     private async Task PlaceValuesIfHouseIsOnSale(BasicHouseInformation data)
     {
         Udbudspris = data.Udbudspris  + " kr.";
@@ -134,6 +133,10 @@ public partial class MainViewModel : BaseViewModel
             NetWorkState = true;
         }
 
+    }
+    private void ClearCache()
+    {
+        scrapeHousesForSale.ClearCache();
     }
     private async Task PlaceValuesIfHouseIsNotOnSale(BasicHouseInformation data)
     {
@@ -177,16 +180,14 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task OnSeBoligClicked()
     {
-       
-        
+
+        ClearCache();
+        GridVisibleIfHouseIsOnSale = false;
+        GridVisibleIfHouseIsNotOnSale = false;
         ShowHouseError = false;
+        ClearFeilds();
         try
         {
-           
-
-            GridVisibleIfHouseIsOnSale = false;
-            GridVisibleIfHouseIsNotOnSale = false;
-            ClearFeilds();
             await Task.Run(() => GetSetVairabels("set"));
             bool isHouseOnSale = await scrapeHousesForSale.CheckIfHouseIsOnSale();
             if (isHouseOnSale)
@@ -215,9 +216,9 @@ public partial class MainViewModel : BaseViewModel
             GridVisibleIfHouseIsOnSale = false;
             GridVisibleIfHouseIsNotOnSale = false;
             ShowHouseError = true;
-            scrapeHousesForSale.ClearCache();
+
         }
-        scrapeHousesForSale.ClearCache();
+       
     }
 
     private void ClearFeilds()

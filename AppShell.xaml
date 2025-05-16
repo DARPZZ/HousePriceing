@@ -55,6 +55,15 @@
          />
         </Tab>
     </FlyoutItem>
-
+    <FlyoutItem FlyoutIcon="distanceicon.png"   Title="Afstand">
+        <Tab>
+            <ShellContent
+  
+               Title="Afstand"
+               ContentTemplate="{DataTemplate views:DistancePage}" 
+               Route="DistancePage"
+            />
+        </Tab>
+    </FlyoutItem>
 
 </Shell>
