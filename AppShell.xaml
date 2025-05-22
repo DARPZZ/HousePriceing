@@ -65,5 +65,14 @@
             />
         </Tab>
     </FlyoutItem>
+    <FlyoutItem FlyoutIcon="neighborpic.png"   Title="Lokal området">
+        <Tab>
+            <ShellContent
+             Title="Lokal området"
+             ContentTemplate="{DataTemplate views:LokalområdetPage}" 
+             Route="LokalområdetPage"
+          />
+        </Tab>
+    </FlyoutItem>
 
 </Shell>

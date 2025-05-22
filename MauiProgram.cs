@@ -44,6 +44,10 @@ public static class MauiProgram
 		builder.Services.AddSingleton<DistanceViewModel>();
 		builder.Services.AddSingleton<DistanceScraper>();
 
+		builder.Services.AddSingleton<LokalområdetViewModel>();
+		builder.Services.AddSingleton<LokalområdetPage>();
+		builder.Services.AddSingleton<LokalområdetScraper>();
+
         return builder.Build();
 	}
 }

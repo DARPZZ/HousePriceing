@@ -77,6 +77,9 @@
 	  <MauiXaml Update="Views\InbrudPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\LokalområdetPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\OversvømmelsePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
