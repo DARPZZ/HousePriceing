@@ -17,7 +17,7 @@ namespace HousePriceing.Helpers.Scrapers
            
         }
       
-        public async Task<OversvømmelseModel> GetInformationAboutOversvømmelse()
+        public async Task<OversvømmelseModel> GetInformationAboutOversvømmelsesdirektivet()
         {
             _document = await LoadHtml(" ");
             var planTrin1 = _document.DocumentNode.SelectSingleNode("//*[@id=\"oversvoemmelsesdirektiv\"]/div/div[2]/div/div[1]");
@@ -39,6 +39,21 @@ namespace HousePriceing.Helpers.Scrapers
                     platrin2
             );
             return oversvømmelsesModel;
+        }
+        public async Task<string> GetInformationAboutEkstremRegn()
+        {
+            _document = await LoadHtml(" ");
+            var extreamRegn = _document.DocumentNode.SelectSingleNode("//*[@id=\"skybrud\"]/div/div[2]/div/div[1]/p[1]");
+            string text = extreamRegn != null ? extreamRegn.InnerText : null;
+            return text;
+            
+        }
+        public async Task<string> GetInformationAboutGrundvand()
+        {
+            _document = await LoadHtml(" ");
+            var grundVand = _document.DocumentNode.SelectSingleNode("//*[@id=\"grundvand\"]/div/div[2]/div/div[1]/text()");
+            string text = grundVand != null ? grundVand.InnerText.Trim() : null;
+            return text;
         }
     }
 }
