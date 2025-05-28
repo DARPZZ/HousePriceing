@@ -51,23 +51,10 @@
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiImage Remove="Resources\Images\thefticon.png" />
-	  <MauiImage Remove="Resources\Images\trafficicon.png" />
 	</ItemGroup>  
 
 	<ItemGroup>
 	  <None Remove="Resources\hest.jpg" />
-	</ItemGroup>  
-
-	<ItemGroup>
-	  <AndroidInterfaceDescription Include="Resources\Images\thefticon.png" />
-	</ItemGroup>  
-
-	<ItemGroup>
-	  <LibraryProjectProperties Include="Resources\Images\trafficicon.png" />
 	</ItemGroup>
 
 	<ItemGroup>

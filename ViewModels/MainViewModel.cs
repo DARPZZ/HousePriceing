@@ -116,7 +116,7 @@ public partial class MainViewModel : BaseViewModel
 
     private void RunOnSpecificPropertiesChanged()
     {
-        Showmap = false;
+        //Showmap = false;
     }
     
     private void OnNetworkStatusChanged(object? sender, bool e)
