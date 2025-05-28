@@ -3,21 +3,20 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:vm="clr-namespace:HousePriceing.ViewModels"
 			 x:Class="HousePriceing.Views.MainPage"
+             xmlns:mapsui="clr-namespace:Mapsui.UI.Maui;assembly=Mapsui.UI.Maui"
 			 x:DataType="vm:MainViewModel">
     <ScrollView>
     <StackLayout >
-        <Label
-            FontSize="Large" HorizontalOptions="Center"
-            Text="Velkommen">
-        </Label>
+ 
         <Grid RowDefinitions="1*,1*" ColumnDefinitions="1*,1*" Padding="0,10,0,25">
             <Entry Text="{Binding Vejnavn}" Placeholder="Vej navn" Grid.Row="0" Grid.Column="0" />
-            <Entry Text="{Binding Husnummer}" Placeholder="Hus nummer" Grid.Row="0" Grid.Column="1"/>
+            <Entry Text="{Binding Husnummer}"  Placeholder="Hus nummer" Grid.Row="0" Grid.Column="1"/>
             <Entry Text="{Binding Postnummer}" Placeholder="Postnummer" Grid.Row="1" Grid.Column="0"/>
-            <Entry Text="{Binding By}" Placeholder="By" Grid.Row="1" Grid.Column="1"/>
+            <Entry Text="{Binding By}"  Placeholder="By" Grid.Row="1" Grid.Column="1"/>
         </Grid>
 
-        <Button 
+
+            <Button 
             Command="{Binding StartStopTripClickedCommand}" 
             Padding="5,5,5,5"
             HeightRequest="45"
@@ -25,8 +24,10 @@
             Text="Hent min lokation"
             HorizontalOptions="Center"
             IsEnabled="{Binding ShowHouseEnable}" >
-
-        </Button>
+            </Button>
+            <StackLayout IsVisible="{Binding Showmap}">
+                <mapsui:MapControl x:Name="MapView" HeightRequest="150" />
+            </StackLayout>
         <Grid RowDefinitions="1*,1*,1*,1*,1*" ColumnDefinitions="1*,1*" Padding="0,50,0,5" IsVisible="{Binding GridVisibleIfHouseIsOnSale}">
             <Label Text="Pris" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="0" Grid.Column="0"></Label>
             <Entry HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Udbudspris}" Placeholder="Udbudspris"   Grid.Row="0" Grid.Column="0" Margin="0,5,0,10" />

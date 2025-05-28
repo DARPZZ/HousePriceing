@@ -1,14 +1,22 @@
 ﻿
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using HousePriceing.Helpers;
 using HousePriceing.Helpers.Scrapers;
 using HousePriceing.Models.HouseingModels;
 using HtmlAgilityPack;
-
+using Mapsui.Projections;
+using Mapsui.Tiling;
 namespace HousePriceing.ViewModels;
 
 public partial class MainViewModel : BaseViewModel
 {
     #region  ObservableProperty
+
+    [ObservableProperty]
+    private bool locationChangeText;
+    [ObservableProperty]
+    private bool showmap;
     [ObservableProperty]
     private string vejnavn;
     [ObservableProperty]
@@ -74,11 +82,13 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty]
     private bool showHouseEnable;
     #endregion
+    public IRelayCommand PinMapCommand { get; }
 
     private LocationHelper locationHelper;
     private ScrapeHousesForSale scrapeHousesForSale;
     private ScrapeHousesNotForSale notForSale;
     private ConnectivityTest connectionHelper;
+
     public MainViewModel(ScrapeHousesForSale scrapeHousesForSale, LocationHelper locationHelper, ScrapeHousesNotForSale scrapeHousesNotForSale, ConnectivityTest connectionHelper)
     {
         this.scrapeHousesForSale = scrapeHousesForSale;
@@ -91,6 +101,24 @@ public partial class MainViewModel : BaseViewModel
         connectionHelper.NetworkStatusChanged += OnNetworkStatusChanged;
     }
 
+    protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+    {
+        base.OnPropertyChanged(args);
+
+     
+        var propertiesToTrack = new[] { nameof(Vejnavn), nameof(By), nameof(Postnummer), nameof(Husnummer)};
+
+        if (propertiesToTrack.Contains(args.PropertyName))
+        {
+            RunOnSpecificPropertiesChanged();
+        }
+    }
+
+    private void RunOnSpecificPropertiesChanged()
+    {
+        Showmap = false;
+    }
+    
     private void OnNetworkStatusChanged(object? sender, bool e)
     {
         if (e)
@@ -169,13 +197,20 @@ public partial class MainViewModel : BaseViewModel
                 break;
         }
     }
-
+    private void Sendmessage()
+    {
+        var coordinates = (Longitude: locationHelper.longi, Latitude: locationHelper.lati);
+        WeakReferenceMessenger.Default.Send(new GenericValueChangedMessage<(double Longitude, double Latitude)>(coordinates));
+    }
     [RelayCommand]
     private async Task OnStartStopTripClicked()
     {
+        Showmap = true;
         await locationHelper.GetCurrentLocation();
         await locationHelper.GetURLStringFromCordiantes(locationHelper.lati, locationHelper.longi);
+        Sendmessage();
         await GetSetVairabels("get");
+       
     }
     [RelayCommand]
     private async Task OnSeBoligClicked()
@@ -210,6 +245,8 @@ public partial class MainViewModel : BaseViewModel
                 GridVisibleIfHouseIsOnSale = false;
                 GridVisibleIfHouseIsNotOnSale = true;
             }
+            
+            Showmap = true;
         }
         catch (Exception ex)
         {
@@ -218,11 +255,13 @@ public partial class MainViewModel : BaseViewModel
             ShowHouseError = true;
 
         }
+
        
     }
 
     private void ClearFeilds()
     {
+       
         Udbudspris = "";
         Type = "";
         Værelser = "";
