@@ -24,7 +24,24 @@ namespace HousePriceing.Helpers.Scrapers
             var node = htmlDoc.DocumentNode.SelectSingleNode($"//*[@id=\"bbr\"]/div/div[2]/div/div[1]/table[1]/tbody/tr[{trNumber}]/td[2]/strong");
             return node;
         }
-        private async Task<string> GetPrice()
+        private async Task<bool> CheckIfAIIsCorrect()
+        {
+            htmlDoc = await LoadHtml("vurdering");
+            string node = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[4]/div[3]/div[2]/div/div[2]").InnerText.Trim();
+            if(node.Contains("usædvanligvis"))
+            {
+                return false;
+            }
+            return true;
+        }
+        private async Task<string> GetPriceIfAiIsNotCorrect()
+        {
+            htmlDoc = await LoadHtml("vurdering");
+            string node = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[4]/div[2]/div[1]/div[1]/div/div[2]/div[2]/strong").InnerText.Trim();
+            return node;
+        }
+
+        private async Task<string> GetPriceIfAiIsCorrect()
         {
             htmlDoc = await LoadHtml("vurdering");
             string node = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"AIVurderingnumber\"]").InnerText.Trim();
@@ -34,7 +51,12 @@ namespace HousePriceing.Helpers.Scrapers
         public async Task<BasicHouseInformation> InformationAboutHouseNotOnSale()
         {
             var loadHtmlTask = LoadHtml(" ");
-            var prisTask =  GetPrice();
+            var checkAi = await CheckIfAIIsCorrect();
+            var prisTask = GetPriceIfAiIsCorrect();
+            if(!checkAi)
+            {
+                prisTask = GetPriceIfAiIsNotCorrect();
+            }
             await Task.WhenAll(loadHtmlTask, prisTask);
             var pris = prisTask.Result.Trim();
             htmlDoc = loadHtmlTask.Result;
