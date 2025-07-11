@@ -1,5 +1,6 @@
 ﻿using HousePriceing.Helpers;
 using HousePriceing.Helpers.Scrapers;
+using HousePriceing.Helpers.Scrapers.HouseScrapers;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 namespace HousePriceing;
 
@@ -24,7 +25,7 @@ public static class MauiProgram
 		builder.Services.AddScoped<ScrapeHousesNotForSale>();
 		builder.Services.AddSingleton<Indbrudscraper>();
 		builder.Services.AddSingleton<ConnectivityTest>();
-
+		builder.Services.AddSingleton<LatestSalePrice>();
 		builder.Services.AddSingleton<BoligOpvarmningPage>();
 
 		builder.Services.AddSingleton<BoligOpvarmningViewModel>();

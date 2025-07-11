@@ -40,14 +40,7 @@ namespace HousePriceing.Helpers.Scrapers
             );
             return oversvømmelsesModel;
         }
-        public async Task<string> GetInformationAboutEkstremRegn()
-        {
-            _document = await LoadHtml(" ");
-            var extreamRegn = _document.DocumentNode.SelectSingleNode("//*[@id=\"skybrud\"]/div/div[2]/div/div[1]/p[1]");
-            string text = extreamRegn != null ? extreamRegn.InnerText : null;
-            return text;
-            
-        }
+       
         public async Task<string> GetInformationAboutGrundvand()
         {
             _document = await LoadHtml(" ");

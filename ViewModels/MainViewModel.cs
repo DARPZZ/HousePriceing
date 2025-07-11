@@ -1,8 +1,10 @@
 ﻿
+using System.Text;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using HousePriceing.Helpers;
 using HousePriceing.Helpers.Scrapers;
+using HousePriceing.Helpers.Scrapers.HouseScrapers;
 using HousePriceing.Models.HouseingModels;
 using HtmlAgilityPack;
 using Mapsui.Projections;
@@ -78,6 +80,11 @@ public partial class MainViewModel : BaseViewModel
     private bool gridVisibleIfHouseIsNotOnSale;
 
     [ObservableProperty]
+    private string senestesalgspris;
+    [ObservableProperty]
+    private string senestesalgsprisDato;
+
+    [ObservableProperty]
     private bool showHouseError;
     [ObservableProperty]
     private bool showHouseEnable;
@@ -86,11 +93,13 @@ public partial class MainViewModel : BaseViewModel
 
     private LocationHelper locationHelper;
     private ScrapeHousesForSale scrapeHousesForSale;
+    private LatestSalePrice latestSalePrice;
     private ScrapeHousesNotForSale notForSale;
     private ConnectivityTest connectionHelper;
 
-    public MainViewModel(ScrapeHousesForSale scrapeHousesForSale, LocationHelper locationHelper, ScrapeHousesNotForSale scrapeHousesNotForSale, ConnectivityTest connectionHelper)
+    public MainViewModel(ScrapeHousesForSale scrapeHousesForSale, LocationHelper locationHelper, ScrapeHousesNotForSale scrapeHousesNotForSale, ConnectivityTest connectionHelper, LatestSalePrice latestSalePrice)
     {
+        this.latestSalePrice = latestSalePrice;
         this.scrapeHousesForSale = scrapeHousesForSale;
         this.locationHelper = locationHelper;
         GridVisibleIfHouseIsOnSale = false;
@@ -101,23 +110,6 @@ public partial class MainViewModel : BaseViewModel
         connectionHelper.NetworkStatusChanged += OnNetworkStatusChanged;
     }
 
-    protected override void OnPropertyChanged(PropertyChangedEventArgs args)
-    {
-        base.OnPropertyChanged(args);
-
-     
-        var propertiesToTrack = new[] { nameof(Vejnavn), nameof(By), nameof(Postnummer), nameof(Husnummer)};
-
-        if (propertiesToTrack.Contains(args.PropertyName))
-        {
-            RunOnSpecificPropertiesChanged();
-        }
-    }
-
-    private void RunOnSpecificPropertiesChanged()
-    {
-        //Showmap = false;
-    }
     
     private void OnNetworkStatusChanged(object? sender, bool e)
     {
@@ -133,9 +125,20 @@ public partial class MainViewModel : BaseViewModel
         }
     
     }
-
+    private async Task  LatestPriceData()
+    {
+        var latestSalePriceing = await latestSalePrice.GetLatestSalePrice();
+        if (latestSalePriceing != null) {
+            var pris = latestSalePriceing.GetValueOrDefault("Pris");
+            var dato = latestSalePriceing.GetValueOrDefault("Dato");
+            Senestesalgspris = pris;
+            SenestesalgsprisDato = "Seneste salg: " + dato;
+        }
+        
+    }
     private async Task PlaceValuesIfHouseIsOnSale(BasicHouseInformation data)
     {
+        await LatestPriceData();
         Udbudspris = data.Udbudspris  + " kr.";
         Type = data.Type;
         Værelser = data.Værelser;
@@ -168,6 +171,7 @@ public partial class MainViewModel : BaseViewModel
     }
     private async Task PlaceValuesIfHouseIsNotOnSale(BasicHouseInformation data)
     {
+        await LatestPriceData();
         Estimat = data.Estimat;
         Opførselsesår = data.Opførselsesår;
         Boligtype = data.Boligtype;
@@ -255,13 +259,10 @@ public partial class MainViewModel : BaseViewModel
             ShowHouseError = true;
 
         }
-
-       
     }
 
     private void ClearFeilds()
     {
-       
         Udbudspris = "";
         Type = "";
         Værelser = "";
