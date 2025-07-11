@@ -34,9 +34,8 @@ namespace HousePriceing.ViewModels
         private async Task HandlePageAppearAsync(object? sender, bool e)
         {
             var odInfo = ShowUserInformationAboutOD();
-            var erInfo = ShowUserInformationAboutER();
             var gvInfo = ShowUserInformationAboutGV();
-            await Task.WhenAll(odInfo, erInfo, gvInfo);
+            await Task.WhenAll(odInfo, gvInfo);
         }
         private async Task ShowUserInformationAboutOD()
         {
@@ -75,25 +74,7 @@ namespace HousePriceing.ViewModels
                 return "dangericon.png";
             }
         }
-        private async Task ShowUserInformationAboutER()
-        {
-            try
-            {
-                var data = await _scraper.GetInformationAboutEkstremRegn();
-                if (data == null)
-                { 
-                    return;
-                }
-                EkstremRegnText = data;
-                EkstremRegnPicture = ChangePicture(data);
-
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-
-        }
+       
         private async Task ShowUserInformationAboutGV()
         {
             try

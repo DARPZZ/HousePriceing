@@ -19,6 +19,7 @@ public partial class BoligOpvarmningViewModel : BaseViewModel
     {
         var data = await _scraper.GetBoligOpvarmning();
         OpvarmningText = "Den primære opvarmningskilde er: ";
+
         if(data.Contains("Fjernvarme".ToLower()))
         {
             PictureSource = "fjernvarme.png";
