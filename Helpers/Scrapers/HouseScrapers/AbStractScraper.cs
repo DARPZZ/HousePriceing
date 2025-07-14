@@ -28,7 +28,7 @@ namespace HousePriceing.Helpers.Scrapers.HouseScrapers
         
         protected string ConvertEnergimærke(HtmlDocument htmldoc)
         {
-            var energimærkebilelde = htmldoc.DocumentNode.SelectSingleNode("//*[@id=\"ctrldiv\"]/div[4]/div[1]/div[4]/div[1]/div[1]/div/div[2]/div[3]/img");
+            var energimærkebilelde = htmldoc.DocumentNode.SelectSingleNode("//img[contains(@src, '/img/energy')]");
             var energimærkebilledeTrimmed = energimærkebilelde.OuterHtml.Trim();
             var substringbillede = getBetween(energimærkebilledeTrimmed, "/img/energy/", "-info.png");
             return substringbillede;
