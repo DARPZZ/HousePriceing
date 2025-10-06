@@ -17,7 +17,7 @@ namespace HousePriceing.Helpers.Scrapers
         public async Task<string>  GetInformationAboutHouseBreakin()
         {
             _document = await LoadHtml(" ");
-            var inbrudNode = _document.DocumentNode.SelectSingleNode("//*[@id=\"naboerne\"]/div[6]/div/div[2]/div/div[1]/p[1]/u");
+            var inbrudNode = _document.DocumentNode.SelectSingleNode("//*[@id=\"indbrud\"]/div/div[2]/div/div[1]/p[1]/u");
             var inbrudText = inbrudNode !=null ? inbrudNode.InnerText :null;
             return inbrudText;
         }

@@ -85,7 +85,7 @@
             <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Antalværelser}" Grid.ColumnSpan="2" Placeholder="Antalværelser" Grid.Row="3" Grid.Column="0"  Margin="0,5,0,10"/>
 
             <Label Text="{Binding SenestesalgsprisDato }" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="4" Grid.ColumnSpan="2"></Label>
-            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Senestesalgspris}" Placeholder="Boligtype" Grid.Row="4" Grid.ColumnSpan="2"  Margin="0,5,0,10"/>
+            <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Senestesalgspris}" Placeholder="SenestesalgsprisDato" Grid.Row="4" Grid.ColumnSpan="2"  Margin="0,5,0,10"/>
             
             <Label Text="Bolig type" HorizontalOptions="Center" FontAttributes="Bold"  Grid.Row="5" Grid.ColumnSpan="2"></Label>
             <Entry  HorizontalTextAlignment="Center" IsReadOnly="True" Text="{Binding Boligtype}" Placeholder="Boligtype" Grid.Row="5" Grid.ColumnSpan="2"  Margin="0,5,0,10"/>

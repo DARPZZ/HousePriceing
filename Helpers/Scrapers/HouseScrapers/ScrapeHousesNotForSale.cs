@@ -44,7 +44,7 @@ namespace HousePriceing.Helpers.Scrapers
         private async Task<string> GetPriceIfAiIsCorrect()
         {
             htmlDoc = await LoadHtml("vurdering");
-            string node = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"AIVurderingnumber\"]").InnerText.Trim();
+            string node = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[4]/div[2]/div[1]/div[2]/div[1]/div[2]/div/div/span").InnerText.Trim();
             return node;
         }
 
